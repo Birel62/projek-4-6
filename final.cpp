@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
-
+#include <cstdlib>
 
 using namespace std;
 
@@ -195,3 +195,84 @@ void village(Player &p) {
             break;
     }
 }
+
+void playerAttack(Player &p, Enemy &e) {
+
+    int c;
+
+    cout << "\n1. Basic attack\n";
+    cout << "2. Ability\n";
+
+    cin >> c;
+
+    if (c == 1) {
+
+        e.hp -= p.attack;
+
+        cout << "Udelil jsi " << p.attack << " damage.\n";
+    }
+
+    else {
+
+        if (p.clas == "Wizard") {
+
+            cout << "1. Fireball (2 mana)\n";
+            cin >> c;
+
+            if (c == 1 && p.mana >= 2) {
+                p.mana -= 2;
+                e.hp -= 5;
+                cout << "Fireball za 5 damage.\n";
+            }
+        }
+
+        else if (p.clas == "Rytir") {
+
+            cout << "1. Furious Slash (2 mana)\n";
+            cin >> c;
+
+            if (c == 1 && p.mana >= 2) {
+                p.mana -= 2;
+                e.hp -= 6;
+                cout << "Silny utok za 6 damage.\n";
+            }
+        }
+
+        else if (p.clas == "Farmar") {
+
+            cout << "1. Slepice (2 mana)\n";
+            cin >> c;
+
+            if (c == 1 && p.mana >= 2) {
+
+                int dmg = rand() % 5 + 1;
+
+                p.mana -= 2;
+                e.hp -= dmg;
+
+                cout << "Slepice dala " << dmg << " damage.\n";
+            }
+        }
+
+        else if (p.clas == "Femboy") {
+
+            cout << "1. UwU Heal (2 mana)\n";
+            cin >> c;
+
+            if (c == 1 && p.mana >= 2) {
+
+                p.mana -= 2;
+                p.hp += 3;
+
+                if (p.hp > p.maxHp)
+                    p.hp = p.maxHp;
+
+                cout << "Heal +3 HP.\n";
+            }
+        }
+    }
+
+    if (e.hp < 0)
+        e.hp = 0;
+}
+
